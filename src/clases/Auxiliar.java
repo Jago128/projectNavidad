@@ -32,6 +32,6 @@ public class Auxiliar extends Trabajador {
 
 	@Override
 	public String toString() {
-		return "Auxiliar [cargo=" + cargo + ", langs=" + langs + "]";
+		return super.toString()+ "Cargo: "+cargo+", Idiomas: "+langs+"]";
 	}
 }

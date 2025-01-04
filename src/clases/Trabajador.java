@@ -58,6 +58,6 @@ public class Trabajador {
 
 	@Override
 	public String toString() {
-		return "Trabajador [dni=" + dni + ", name=" + name + ", surN=" + surN + ", birthD=" + birthD + ", altaD=" + altaD + "]";
+		return "Trabajador [DNI: "+dni+", Nombre: "+name+", Apellido: "+surN+", Fecha de Nacimiento: "+birthD+", Fecha de Alta: "+altaD+"";
 	}
 }

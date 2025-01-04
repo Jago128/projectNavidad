@@ -33,9 +33,11 @@ public class Piloto extends Trabajador {
 	public void setV(ArrayList<Vuelo> v) {
 		this.v = v;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "Piloto [license=" + license + ", residence=" + residence + ", v=" + v + "]";
+		return super.toString()+ "Fecha de Licencia: "+license+", Residencia Oficial: "+residence+", Vuelos: "+v+"]";
 	}
+	
+	
 }
