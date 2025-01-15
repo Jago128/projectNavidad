@@ -3,6 +3,7 @@ import java.util.regex.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import clases.*;
 import exceptions.*;
@@ -37,19 +38,19 @@ public class Aerolinea {
 			break;
 
 		case 6:
-
+			listFlightDates(t);
 			break;
 
 		case 7:
-
+			listPilotoDestination(t);
 			break;
 
 		case 8:
-
+			auxiliarIdioma(t);
 			break;
 
 		case 9:
-
+			listAge(t);
 			break;
 
 		case 10:
@@ -288,12 +289,120 @@ public class Aerolinea {
 			if (t.containsKey(dni) && t.get(dni) instanceof Piloto) {
 				found=true;
 				for (int j=0;i<((Piloto)t.get(dni)).getV().size();j++) {
-					((Piloto)t.get(dni)).getV().get(j).toString();
+					System.out.println(((Piloto)t.get(dni)).getV().get(j).toString());
 				}
 			}
 			if (!found) {
 				System.err.println("El DNI introducido es invalido o no existe.");
 			}
 		}
+	}
+
+	public static ArrayList <Vuelo> fillData(ArrayList <Vuelo> v, HashMap <String, Trabajador> t) {
+		for (Trabajador tr:t.values()) {
+			if (tr instanceof Piloto) {
+				for (int i=0;i<((Piloto)tr).getV().size();i++) {
+					v.add(((Piloto)tr).getV().get(i));
+				}
+			}
+		}
+		return v;
+	}
+
+	public static void listFlightDates(HashMap <String, Trabajador> t) {
+		LocalDate date1, date2;
+		ArrayList <Vuelo> v=new ArrayList<>();
+		v=fillData(v,t);
+		System.out.println("Introduce la primera fecha: (DD/MM/AAAA)");
+		date1=Utilidades.leerFechaDMA();
+		System.out.println("Introduce la segunda fecha: (DD/MM/AAAA)");
+		date2=Utilidades.leerFechaDMAPosterior(date1);
+		for (Vuelo vu:v) {
+			if (vu.getStart().isAfter(date1)&&vu.getEnd().isBefore(date2)) {
+				System.out.println(vu.toString());
+			}
+		}
+	}
+
+	public static void listPilotoDestination(HashMap <String, Trabajador> t) {
+		String destination;
+		boolean found=false;
+
+		System.out.println("Introduce el destino del vuelo:");
+		destination=Utilidades.introducirCadena();
+		for (Trabajador tr:t.values()) {
+			for (int i=0;i<((Piloto)tr).getV().size(); i++) {
+				if (((Piloto)tr).getV().get(i).getDestination().equalsIgnoreCase(destination)) {
+					found=true;
+					System.out.println(((Piloto)tr).toString());
+					
+				}
+			}
+		}
+		if (!found) {
+			System.out.println("No se han encontrado pilotos que hayan participado en vuelos hacia "+destination);
+		}
+	}
+
+	public static void auxiliarIdioma(HashMap <String, Trabajador> t) {
+		boolean found=false;
+		String lang;
+
+		System.out.println("Introduce un idioma en concreto:");
+		lang=Utilidades.introducirCadena();
+		for (Trabajador tr:t.values()) {
+			for (int i=0;i<((Auxiliar)tr).getLangs().size(); i++) {
+				if (((Auxiliar)tr).getLangs().get(i).equalsIgnoreCase(lang)) {
+					found=true;
+					System.out.println(((Auxiliar)tr).toString());
+				}
+			}
+		}
+		if (!found) {
+			System.out.println("No se han encontrado auxiliares que hablen el idioma "+lang);
+		}
+	}
+
+	public static void listAge(HashMap <String, Trabajador> t) {
+		ArrayList <ComparingAge> cI=new ArrayList <>();
+		for (Trabajador a:t.values()) {
+			for (int i=0;i<t.size();i++) {
+				cI.add(new ComparingAge());
+				cI.get(i).calcAge(a.getBirthD());
+			}
+			Collections.sort(cI);
+		}
+		for (ComparingAge c:cI) {
+			System.out.println(c.toString());
+		}
+	}
+	
+	public static void listFlightTime(HashMap <String, Trabajador> t) {
+		//TBD
+	}
+	
+	public static void avgDurPilotoFlights(HashMap <String, Trabajador> t) {
+		//TBD
+	}
+	
+	public static void listDestinationFlightCount(HashMap <String, Trabajador> t) {
+		//TBD
+	}
+	
+	public static void showOldestPilot(HashMap <String, Trabajador> t) {
+		ArrayList <ComparingAge> cI=new ArrayList <>();
+		for (Trabajador a:t.values()) {
+			for (int i=0;i<t.size();i++) {
+				cI.add(new ComparingAge());
+				cI.get(i).calcAge(a.getBirthD());
+			}
+			cI.sort(Collections.reverseOrder());
+		}
+		System.out.println(cI.get(0).toString());
+	}
+	
+	public static void listResidence(HashMap <String, Trabajador> t) {
+		String residence;
+		System.out.println("");
 	}
 }
