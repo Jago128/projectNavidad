@@ -402,6 +402,7 @@ public class Aerolinea {
 	}
 	
 	public static void listResidence(HashMap <String, Trabajador> t) {
+		@SuppressWarnings("unused")
 		String residence;
 		System.out.println("");
 	}
